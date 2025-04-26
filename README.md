@@ -144,7 +144,7 @@ nltk.download('stopwords')
 **Md Adil Muzaffar**
 
 - 🔗 [LinkedIn Profile](https://www.linkedin.com/in/md-adil-muzaffar)
-- 💻 GitHub: [yourusername]([https://github.com/yourusername](https://github.com/mdadilmuzaffar24))
+- 💻 GitHub: [GitHub](https://github.com/mdadilmuzaffar24)
 
 ---
 

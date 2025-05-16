@@ -1,161 +1,176 @@
-# 📰 Fake News Detection Using Machine Learning
+# 🔖 Fake News Detection Using Machine Learning
 
 ---
 
-## 📛 Problem Statement
+## 💛 Problem Statement
 
-In the current digital era, the spread of fake news through social media and online platforms has become a major challenge. Fake news can influence public opinion, create panic, or manipulate markets and societies. There is a strong need for an automated system that can efficiently classify news articles as **real** or **fake** to ensure information integrity.
+In the digital age, misinformation and fake news can spread rapidly across social media and online platforms. Such content may influence public perception, affect elections, incite panic, or sway markets. To preserve the integrity of information, there is a growing need for automated systems capable of verifying the authenticity of online news articles.
 
 ---
 
 ## 🌟 Objective
 
-- To develop a Machine Learning model capable of classifying news articles as **real** or **fake**.
-- To apply **Natural Language Processing (NLP)** techniques to pre-process textual data.
-- To evaluate the model’s performance using accuracy metrics on both training and testing datasets.
-- To build a simple **predictive system** that can predict the authenticity of new news articles.
+* To build a robust Machine Learning model to classify news articles as **Real** or **Fake**.
+* To leverage **Natural Language Processing (NLP)** techniques for feature engineering from raw text.
+* To evaluate and compare multiple ML models using cross-validation.
+* To implement a predictive system that classifies unseen news inputs.
 
 ---
 
-## 📚 About the Dataset
+## 📚 Dataset Overview
 
-| Column | Description |
-|:---|:---|
-| **id** | Unique identifier for each news article |
-| **title** | Title of the news article |
-| **author** | Author of the news article |
-| **text** | Main text body of the news article (may be incomplete) |
-| **label** | Target label - **0** (Real News) or **1** (Fake News) |
+| Column   | Description                              |
+| -------- | ---------------------------------------- |
+| `id`     | Unique identifier for each news article  |
+| `title`  | Title of the news article                |
+| `author` | Author of the news article               |
+| `text`   | Main body of the news article            |
+| `label`  | Target: `0` = Real News, `1` = Fake News |
 
-- Dataset Shape: **(20800, 5)**
-
----
-
-## 🔧 Technologies and Libraries Used
-
-- **Python 3**
-- **Pandas** – Data analysis and manipulation
-- **NumPy** – Numerical operations
-- **Regular Expressions (re)** – Text cleaning
-- **NLTK** (Natural Language Toolkit) – Stopwords removal and Stemming
-- **Scikit-learn** – ML modeling and evaluation:
-  - TfidfVectorizer (Text to numerical feature transformation)
-  - LogisticRegression (Model building)
-  - Train-Test Split
-  - Accuracy Score (Model evaluation)
+* Dataset Size: **20,800 rows × 5 columns**
 
 ---
 
-## 🛠️ Project Workflow
+## 🛠️ Technologies and Libraries Used
 
-### 1. Importing the Dependencies
+* **Python 3.8+**
+* **Pandas**, **NumPy** – Data manipulation
+* **NLTK** – Stopwords removal, stemming
+* **Regular Expressions** – Text cleaning
+* **Scikit-learn**:
 
-- Imported essential libraries for data handling, text processing, feature extraction, and model building.
-
----
-
-### 2. Data Preprocessing
-
-- **Loading the Dataset**
-  - Loaded the dataset into a Pandas DataFrame and examined the shape and contents.
-
-- **Handling Missing Values**
-  - Replaced missing values in `author`, `title`, and `text` with empty strings.
-
-- **Merging Important Features**
-  - Combined `author` and `title` into a single field called `content`.
-
-- **Text Cleaning & Stemming**
-  - Converted text to lowercase
-  - Removed special characters
-  - Removed stopwords
-  - Applied **Porter Stemming**
-
-- **Feature Transformation**
-  - Used **TfidfVectorizer** to convert cleaned text into numerical feature vectors.
+  * `TfidfVectorizer` – Text to feature matrix
+  * `train_test_split`, `cross_val_score`, `StratifiedKFold`
+  * **Models**: LogisticRegression, PassiveAggressiveClassifier, MultinomialNB, LinearSVC, RandomForestClassifier
+  * Model evaluation: accuracy, precision, recall, F1 score
 
 ---
+
+## 📊 Project Workflow
+
+### 1. Data Preprocessing
+
+* Loaded the dataset and replaced missing values with empty strings
+* Merged `author` and `title` into a new column `content`
+* Applied:
+
+  * Lowercasing
+  * Removal of non-alphabetic characters
+  * Stopword removal using NLTK
+  * Stemming using **PorterStemmer**
+
+### 2. Feature Extraction
+
+* Used **TfidfVectorizer** to convert the cleaned content into numerical features
+* Resulting feature matrix: **(20800, 17128)** (sparse format)
 
 ### 3. Model Building
 
-- **Train-Test Split**
-  - Divided the dataset into training (80%) and testing (20%) sets.
-  - Used stratified splitting to maintain class balance.
+* Split the data into train (80%) and test (20%) sets using **stratified sampling**
+* Implemented and trained **five models**:
 
-- **Training the Model**
-  - Trained a **Logistic Regression** model on the TF-IDF feature vectors.
+  * Logistic Regression
+  * Passive Aggressive Classifier
+  * Multinomial Naive Bayes
+  * Linear SVM (LinearSVC)
+  * Random Forest Classifier
+
+### 4. Model Evaluation (5-Fold Cross-Validation)
+
+| Model                   | Accuracy (mean ± std) |
+| ----------------------- | --------------------- |
+| Logistic Regression     | 98.23% ± 0.17%        |
+| Passive Aggressive      | 97.94% ± 0.22%        |
+| Multinomial Naive Bayes | 96.62% ± 0.19%        |
+| Linear SVM              | **98.51% ± 0.15%**    |
+| Random Forest           | 97.27% ± 0.21%        |
+
+* **Best Model**: LinearSVC (Support Vector Machine)
+
+### 5. Final Evaluation on Test Set
+
+* Trained the best model on the training set
+* Evaluated on the test set
+
+| Metric    | Value      |
+| --------- | ---------- |
+| Accuracy  | **98.41%** |
+| Precision | 98.3%      |
+| Recall    | 98.5%      |
+| F1 Score  | 98.4%      |
 
 ---
 
-### 4. Model Evaluation
+## 🚀 Predictive System
 
-| Metric | Score |
-|:---|:---|
-| **Training Accuracy** | 98.63% |
-| **Testing Accuracy** | 97.91% |
+A simple prediction script was built using the best model (LinearSVC).
 
-- Achieved high accuracy on both datasets, demonstrating excellent generalization.
+```python
+X_new = X_test[0]
+prediction = model.predict(X_new)
 
----
-
-### 5. Predictive System
-
-- Built a predictive system to classify new/unseen news articles as Real or Fake.
-
-Example Output:
-```bash
-Prediction: 1
-The news is Fake
-```
-Verification:
-```bash
-True label: 1
+if prediction[0] == 0:
+    print("The news is Real")
+else:
+    print("The news is Fake")
 ```
 
 ---
 
-## 🚀 How to Run This Project
+## 🚜 How to Run This Project
 
-1. Clone this repository.
-2. Install required libraries:
+1. Clone the repository:
+
 ```bash
-pip install pandas numpy scikit-learn nltk
+git clone https://github.com/mdadilmuzaffar24/Fake_News_Prediction.git
 ```
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
 3. Download NLTK stopwords:
+
 ```python
 import nltk
 nltk.download('stopwords')
 ```
-4. Run the notebook or script.
+
+4. Run the notebook or Python script.
 
 ---
 
-## 📊 Future Work
+## 📊 Future Enhancements
 
-- Experiment with advanced models like **Random Forest**, **XGBoost**, **SVM**, or **Deep Learning** (LSTM/GRU).
-- Hyperparameter tuning for improved performance.
-- Deploy a **web application** using **Streamlit** or **Flask**.
-- Build a REST API for fake news detection.
+* Integrate **deep learning models** (LSTM/GRU) for sequence modeling
+* Hyperparameter tuning using **GridSearchCV**
+* Build and deploy a web app using **Flask** or **Streamlit**
+* Extend the pipeline to support live news feed validation
+* Build a REST API endpoint for real-time inference
 
 ---
 
 ## 👨‍💻 Author
 
 **Md Adil Muzaffar**
-
-- 🔗 [LinkedIn Profile](https://www.linkedin.com/in/md-adil-muzaffar)
-- 💻 GitHub: [GitHub](https://github.com/mdadilmuzaffar24)
+M.Tech (CSE - Data Science), Jamia Hamdard University
+🔗 [LinkedIn](https://www.linkedin.com/in/md-adil-muzaffar)
+💻 [GitHub](https://github.com/mdadilmuzaffar24)
 
 ---
 
-## 💚 Badges
+
+
+## 💖 Badges
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Accuracy](https://img.shields.io/badge/Accuracy-98%25%2B-brightgreen)
-![Model](https://img.shields.io/badge/Model-Logistic%20Regression-orange)
+![Model](https://img.shields.io/badge/Model-Linear%20SVM-orange)
 ![NLP](https://img.shields.io/badge/Tech-NLP-blueviolet)
 
 ---
 
-# Thank You! 🚀
+# Thank you for visiting 🚀
 

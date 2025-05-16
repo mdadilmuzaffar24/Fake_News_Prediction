@@ -1,8 +1,8 @@
-# 🔖 Fake News Detection Using Machine Learning
+# 📰 Fake News Detection Using Machine Learning
 
 ---
 
-## 💛 Problem Statement
+## 📛 Problem Statement
 
 In the digital age, misinformation and fake news can spread rapidly across social media and online platforms. Such content may influence public perception, affect elections, incite panic, or sway markets. To preserve the integrity of information, there is a growing need for automated systems capable of verifying the authenticity of online news articles.
 
@@ -46,7 +46,7 @@ In the digital age, misinformation and fake news can spread rapidly across socia
 
 ---
 
-## 📊 Project Workflow
+## 🛠️ Project Workflow
 
 ### 1. Data Preprocessing
 

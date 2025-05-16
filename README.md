@@ -1,5 +1,8 @@
 # 📰 Fake News Detection Using Machine Learning
 
+
+![YouTube Banner - Fake News Detection Project Overview](https://github.com/user-attachments/assets/78e11973-fc9c-47ff-a962-998bbcce9813)
+
 ---
 
 ## 📛 Problem Statement
